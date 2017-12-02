@@ -154,7 +154,7 @@ public class ProductController {
 		System.out.println("/product/addProduct : POST");
 
 		// SpringFramework FileUpload
-		String temDir = "C:\\Users\\bitcamp\\git\\MiniProject07\\07.Model2MVCShop(URI,pattern)\\WebContent\\images\\uploadFiles";
+		String temDir = "C:\\Users\\bitcamp\\git\\MiniProject09\\09.Model2MVCShop(jQuery)\\WebContent\\images\\uploadFiles";
 			
 		multipartFile = mRequest.getFile("fileNames");
 
@@ -171,7 +171,8 @@ public class ProductController {
 		
 		productService.addProduct(product);
 		
-		return "forward:/product/getProduct.jsp";
+//		return "forward:/product/getProduct.jsp";
+		return "forward:/product/addProduct.jsp";
 	}	
 //*/	
 	
