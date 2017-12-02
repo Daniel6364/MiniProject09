@@ -1,40 +1,95 @@
 <%@ page contentType="text/html; charset=euc-kr" %>
+<%@ page pageEncoding="EUC-KR"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<!DOCTYPE html>
 <html>
+
 <head>
+<meta charset="EUC-KR">
 <title>listProduct.jsp</title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
+<!-- CDN(Content Delivery Network) 호스트 사용 -->
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 
 //검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용  
 function fncGetList(currentPage) {
-	document.getElementById("currentPage").value = currentPage;
-   	document.detailForm.submit();
+//	document.getElementById("currentPage").value = currentPage;
+// 	document.detailForm.submit();
+	
+	$("#currentPage").val(currentPage)
+	$("form").attr("method", "POST").attr("action", "/product/listProduct?menu=${ menu }").submit();
 }
 
 function fncLowPrice(currentPage) {
-	document.getElementById("currentPage").value = currentPage;
-	document.getElementById("lowPriceSearch").value = "lowPrice";
-	document.getElementById("highPriceSearch").value = null;
-   	document.detailForm.submit();		
+//	document.getElementById("currentPage").value = currentPage;
+//	document.getElementById("lowPriceSearch").value = "lowPrice";
+//	document.getElementById("highPriceSearch").value = null;
+// 	document.detailForm.submit();		
+   	
+	$("#currentPage").val(currentPage)
+   	$("#lowPriceSearch").val('lowPrice')
+   	$("#highPriceSearch").val(null)
+	$("form").attr("method", "POST").attr("action", "/product/listProduct?menu=${ menu }").submit();
 }
  
 function fncHighPrice(currentPage) {
-	document.getElementById("currentPage").value = currentPage;
-	document.getElementById("lowPriceSearch").value = null;
-	document.getElementById("highPriceSearch").value = "highPrice";
-   	document.detailForm.submit();		
+//	document.getElementById("currentPage").value = currentPage;
+//	document.getElementById("lowPriceSearch").value = null;
+//	document.getElementById("highPriceSearch").value = "highPrice";
+// 	document.detailForm.submit();
+	
+	$("#currentPage").val(currentPage)
+   	$("#lowPriceSearch").val(null)
+   	$("#highPriceSearch").val('highPrice')
+	$("form").attr("method", "POST").attr("action", "/product/listProduct?menu=${ menu }").submit();
+	
 }
+
+$(function(){
+	$( "td.ct_btn01:contains('검색')").css("color", "blue").bind("click", function(){
+		fncGetList('${ search.currentPage }');
+	});
+});
+
+$(function(){
+	$("input[type = "hidden"]:contains('[낮은가격순 ▼]')").css("color", "blue").bind("click", function(){
+		fncLowPrice('${ search.currentPage }');
+	});
+});
+				
+$(function(){
+	$("input:hidden:contains('[높은가격순 ▲]')").css("color", "blue").bind("click", function(){
+		fncHighPrice('${ search.currentPage }');
+	});
+});
+
+$(function(){
+	
+	$( $( ".ct_list_pop td:nth-child(3)" )[0] ).bind("click" , function() {
+		self.location ="/product/getProduct?prodNo=${ product.prodNo }&menu=${ menu }"
+	});
+	
+	$( ".ct_list_pop td:nth-child(9):contains('배송하기')" ).bind("click" , function() {
+		self.location = "/purchase/updateTranCodeByProd?prodNo=${product.prodNo}&tranCode=1"
+	});
+	
+});
+
  
-</script>
+	</script>
 </head>
+
+
 <body bgcolor="#ffffff" text="#000000">
 
 <div style="width:98%; margin-left:10px;">
-		<form name="detailForm" action="/product/listProduct?menu=${ menu }" method="post">
+<!-- <form name="detailForm" action="/product/listProduct?menu=${ menu }" method="post"> -->
+<form name="detailForm">
 		
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -77,7 +132,8 @@ function fncHighPrice(currentPage) {
 						<img src="/images/ct_btnbg01.gif" width="17" height="23">
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						<a href="javascript:fncGetList('${ search.currentPage }');">검색</a>
+						검색
+					<!-- <a href="javascript:fncGetList('${ search.currentPage }');">검색</a> -->
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23">
@@ -98,12 +154,14 @@ function fncHighPrice(currentPage) {
 	<tr>
 		
 		<td colspan="4">
-		
+			
 			<input type="hidden" id="lowPriceSearch" name="lowPriceCondition" value="${ lowPrice }"/>
-				<a href = "javascript:fncLowPrice('${ search.currentPage }')">[낮은가격순 ▼] </a>
+				[낮은가격순 ▼]
+			<!-- <a href = "javascript:fncLowPrice('${ search.currentPage }')">[낮은가격순 ▼]</a> -->
 	
 			<input type="hidden" id="highPriceSearch" name="highPriceCondition" value="${ highPrice }"/>
-				<a href = "javascript:fncHighPrice('${ search.currentPage }')">[높은가격순 ▲] </a>
+				[높은가격순 ▲]
+			<!-- <a href = "javascript:fncHighPrice('${ search.currentPage }')">[높은가격순 ▲]</a> -->
 		</td>
 	</tr>
 	<tr>
@@ -128,7 +186,8 @@ function fncHighPrice(currentPage) {
 			<td></td>
 			<td align="left">
 				<c:if test = "${ product.proTranCode == null }">
-					<a href="/product/getProduct?prodNo=${ product.prodNo }&menu=${ menu }">${ product.prodName }</a>
+					${ product.prodName }
+				<!-- <a href="/product/getProduct?prodNo=${ product.prodNo }&menu=${ menu }">${ product.prodName }</a> -->
 				</c:if>
 				<c:if test = "${ product.proTranCode != null }">
 					${ product.prodName }
@@ -147,7 +206,9 @@ function fncHighPrice(currentPage) {
 				<c:if test = "${ menu == 'manage' }">
 					<c:if test = "${ product.proTranCode == null }">판매중</c:if>
 					<c:if test = "${ product.proTranCode == '0' }">구매완료
-						<a href="/purchase/updateTranCodeByProd?prodNo=${product.prodNo}&tranCode=1">배송하기</a></c:if>
+					<!-- <a href="/purchase/updateTranCodeByProd?prodNo=${product.prodNo}&tranCode=1">배송하기</a> -->
+						배송하기
+					</c:if>
 					<c:if test = "${ product.proTranCode == '1' }">배송중</c:if>
 					<c:if test = "${ product.proTranCode == '2' }">배송완료</c:if>
 				</c:if>
