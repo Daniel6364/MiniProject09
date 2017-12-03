@@ -1,17 +1,42 @@
 <%@ page contentType="text/html; charset=euc-kr" %>
+<%@ page pageEncoding="EUC-KR"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<!DOCTYPE html>
 <html>
+
 <head>
+<meta charset="EUC-KR">
+<title>getProduct.jsp</title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
-<title>getProduct.jsp</title>
+<!-- CDN(Content Delivery Network) 호스트 사용 -->
+	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript">
+
+$(function(){
+	$("td.ct_btn01:contains('구매')").bind("click", function(){
+		self.location = "/purchase/addPurchase?prod_no=${ product.prodNo }"
+			$("form").attr("method", "POST")	
+	});
+});
+
+$(function(){
+	$("td.ct_btn01:contains('이전')").bind("click", function(){
+		history.go(-1);
+	});
+});
+
+
+	</script>
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
 
-<form name="detailForm" method="post">
+<!-- <form name="detailForm" method="post"> -->
+<form name="detailForm">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -70,7 +95,7 @@
 			<img src="http://placehold.it/300X300" />
 		</c:if>
 		<c:if test = "${ product.fileName != null }">
-			<img src="/images/uploadFiles/${ product.fileName }" width="300" height="300"/><br/>
+			<img src="/images/uploadFiles/${ product.fileName }" height="240"/><br/>
 		</c:if>
 		</td>
 	</tr>
@@ -125,7 +150,8 @@
 					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 				</td>
 				<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-					<a href="/purchase/addPurchase?prod_no=${ product.prodNo }">구매</a>
+					구매
+				<!-- <a href="/purchase/addPurchase?prod_no=${ product.prodNo }">구매</a> -->
 				</td>
 				<td width="14" height="23">
 					<img src="/images/ct_btnbg03.gif" width="14" height="23">
@@ -136,7 +162,8 @@
 					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 				</td>
 				<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-					<a href="javascript:history.go(-1)">이전</a>
+					이전
+				<!-- <a href="javascript:history.go(-1)">이전</a> -->
 				</td>
 				<td width="14" height="23">
 					<img src="/images/ct_btnbg03.gif" width="14" height="23">
