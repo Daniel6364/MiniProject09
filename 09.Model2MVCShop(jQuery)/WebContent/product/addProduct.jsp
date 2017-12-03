@@ -116,9 +116,15 @@ $(function(){
 	</tr>
 	<tr>
 		<td width="104" class="ct_write">상품이미지</td>
-		<td bgcolor="D6D6D6" width="1"></td>
+		<td bgcolor="D6D6D6" width="250px"></td>
 		<td class="ct_write01">
-			${ product.fileName }
+		<c:if test = "${ product.fileName == null }">
+			<img src="http://placehold.it/300X300" />
+		</c:if>
+		<c:if test = "${ product.fileName != null }">
+			<img src="/images/uploadFiles/${ product.fileName }" height="240"/><br/>
+		</c:if>
+		${ product.fileName }
 		</td>
 	</tr>
 	<tr>

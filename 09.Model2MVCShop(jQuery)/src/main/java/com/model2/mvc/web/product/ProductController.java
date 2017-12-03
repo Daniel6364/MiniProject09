@@ -155,8 +155,8 @@ public class ProductController {
 
 		// SpringFramework FileUpload
 		String temDir = "C:\\Users\\bitcamp\\git\\MiniProject09\\09.Model2MVCShop(jQuery)\\WebContent\\images\\uploadFiles";
-			
-		multipartFile = mRequest.getFile("fileNames");
+		
+		multipartFile = mRequest.getFile("fileName");
 
 		if (!multipartFile.isEmpty()) {
 			System.out.println("[multipartFile check in if loop]");
@@ -168,6 +168,8 @@ public class ProductController {
 		product.setFileName(multipartFile.getOriginalFilename());
 			
 		}
+		
+		//////////////////////////////////////////
 		
 		productService.addProduct(product);
 		
@@ -197,10 +199,12 @@ public class ProductController {
 	}
 	
 	@RequestMapping( value="updateProduct", method=RequestMethod.GET)
-	public String updateProduct( @RequestParam("prodNo") String prodNo , 
+	public String updateProduct( @RequestParam("prodNo") String prodNo,
 			Model model ) throws Exception{
 
 		System.out.println("/product/updateProduct : GET");
+		
+		
 		//Business Logic
 		Product product = productService.getProduct(Integer.parseInt(prodNo));
 		// Model °ú View ¿¬°á
@@ -210,11 +214,31 @@ public class ProductController {
 	}
 
 	@RequestMapping( value="updateProduct", method=RequestMethod.POST)
-	public String updateProduct( @ModelAttribute("product") Product product, 
+	public String updateProduct( @ModelAttribute("product") Product product,
+//			MultipartHttpServletRequest mRequest, MultipartFile multipartFile,
 //			@RequestParam("manuDate") String manuDate,
 			Model model ) throws Exception{
 
 		System.out.println("/product/updateProduct : POST");
+		
+		/* SpringFramework FileUpload
+		String temDir = "C:\\Users\\bitcamp\\git\\MiniProject09\\09.Model2MVCShop(jQuery)\\WebContent\\images\\uploadFiles";
+
+		multipartFile = mRequest.getFile("fileName");
+
+		if (!multipartFile.isEmpty()) {
+			System.out.println("[multipartFile check in if loop]");
+			System.out.println(multipartFile.toString());
+
+			File file = new File(temDir, multipartFile.getOriginalFilename());
+
+			multipartFile.transferTo(file);
+			product.setFileName(multipartFile.getOriginalFilename());
+		}
+
+		//////////////////////////////////////////*/
+		
+		
 		//Business Logic
 //		product.setManuDate(manuDate.replace("-", ""));
 		productService.updateProduct(product);

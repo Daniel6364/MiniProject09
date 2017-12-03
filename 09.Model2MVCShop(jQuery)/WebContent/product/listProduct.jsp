@@ -32,7 +32,7 @@ function fncLowPrice(currentPage) {
 // 	document.detailForm.submit();		
    	
 	$("#currentPage").val(currentPage)
-   	$("#lowPriceSearch").val('lowPrice')
+   	$("#lowPriceSearch").val("lowPrice")
    	$("#highPriceSearch").val(null)
 	$("form").attr("method", "POST").attr("action", "/product/listProduct?menu=${ menu }").submit();
 }
@@ -45,7 +45,7 @@ function fncHighPrice(currentPage) {
 	
 	$("#currentPage").val(currentPage)
    	$("#lowPriceSearch").val(null)
-   	$("#highPriceSearch").val('highPrice')
+   	$("#highPriceSearch").val("highPrice")
 	$("form").attr("method", "POST").attr("action", "/product/listProduct?menu=${ menu }").submit();
 	
 }
@@ -57,27 +57,41 @@ $(function(){
 });
 
 $(function(){
-	$("input[type = "hidden"]:contains('[낮은가격순 ▼]')").css("color", "blue").bind("click", function(){
+	console.log("[낮은가격순 클릭]");
+	$("input:hidden[name='lowPriceCondition']").bind("click", function(){
 		fncLowPrice('${ search.currentPage }');
+		alert("[낮은가격순 클릭]");
 	});
 });
 				
 $(function(){
-	$("input:hidden:contains('[높은가격순 ▲]')").css("color", "blue").bind("click", function(){
+	console.log("[높은가격순 클릭]");
+	$("input:hidden:contains('[높은가격순 ▲]')").bind("click", function(){
 		fncHighPrice('${ search.currentPage }');
+		alert("[높은가격순 클릭]");
 	});
 });
 
 $(function(){
+
+	$( ".ct_list_pop td:nth-child(3)" ).bind("click" , function() {
+		var prodNo = $( $('input[name="prodNo"]')[$( ".ct_list_pop td:nth-child(3)" ).index(this)] ).val();
+		<c:if test = "${ product.proTranCode == null }">
+			self.location ="/product/getProduct?prodNo=" + prodNo + "&menu=${ menu }"
+		</c:if>
 	
-	$( $( ".ct_list_pop td:nth-child(3)" )[0] ).bind("click" , function() {
-		self.location ="/product/getProduct?prodNo=${ product.prodNo }&menu=${ menu }"
+		<c:if test = "${ product.proTranCode != null }">
+			alert( "해당상품은 이미 판매완료 되었습니다.");
+		</c:if>
 	});
+});
 	
-	$( ".ct_list_pop td:nth-child(9):contains('배송하기')" ).bind("click" , function() {
-		self.location = "/purchase/updateTranCodeByProd?prodNo=${product.prodNo}&tranCode=1"
+$(function(){
+	
+	$( ".ct_list_pop td:nth-child(9):contains('구매완료')" ).bind("click" , function() {
+		var prodNo = $( $('input[name="prodNo"]')[$( ".ct_list_pop td:nth-child(3)" ).index(this)] ).val();
+		self.location = "/purchase/updateTranCodeByProd?prodNo=" + prodNo + "&tranCode=1"
 	});
-	
 });
 
  
@@ -155,11 +169,11 @@ $(function(){
 		
 		<td colspan="4">
 			
-			<input type="hidden" id="lowPriceSearch" name="lowPriceCondition" value="${ lowPrice }"/>
+			<input type="hidden" id="lowPriceSearch" name="lowPriceCondition" value=""/>
 				[낮은가격순 ▼]
 			<!-- <a href = "javascript:fncLowPrice('${ search.currentPage }')">[낮은가격순 ▼]</a> -->
 	
-			<input type="hidden" id="highPriceSearch" name="highPriceCondition" value="${ highPrice }"/>
+			<input type="hidden" id="highPriceSearch" name="highPriceCondition" value=""/>
 				[높은가격순 ▲]
 			<!-- <a href = "javascript:fncHighPrice('${ search.currentPage }')">[높은가격순 ▲]</a> -->
 		</td>
@@ -184,14 +198,14 @@ $(function(){
 		<tr class="ct_list_pop">
 			<td align="center">${ i }</td>
 			<td></td>
-			<td align="left">
-				<c:if test = "${ product.proTranCode == null }">
+			<td align="left">${ product.prodName }
+					<input type="hidden" name="prodNo" value="${ product.prodNo }"/>
+			<!-- <c:if test = "${ product.proTranCode == null }"> -->
+				<!-- <a href="/product/getProduct?prodNo=${ product.prodNo }&menu=${ menu }">${ product.prodName }</a>  --> 
+			<!-- </c:if>
+			 	<c:if test = "${ product.proTranCode != null }"> 
 					${ product.prodName }
-				<!-- <a href="/product/getProduct?prodNo=${ product.prodNo }&menu=${ menu }">${ product.prodName }</a> -->
-				</c:if>
-				<c:if test = "${ product.proTranCode != null }">
-					${ product.prodName }
-				</c:if>
+				</c:if> --> 
 			</td>
 			<td></td>
 			<td align="left">${ product.price }</td>
@@ -207,7 +221,6 @@ $(function(){
 					<c:if test = "${ product.proTranCode == null }">판매중</c:if>
 					<c:if test = "${ product.proTranCode == '0' }">구매완료
 					<!-- <a href="/purchase/updateTranCodeByProd?prodNo=${product.prodNo}&tranCode=1">배송하기</a> -->
-						배송하기
 					</c:if>
 					<c:if test = "${ product.proTranCode == '1' }">배송중</c:if>
 					<c:if test = "${ product.proTranCode == '2' }">배송완료</c:if>
