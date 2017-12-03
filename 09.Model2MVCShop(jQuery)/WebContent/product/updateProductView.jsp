@@ -51,7 +51,7 @@ function fncUpdateProduct(){
 //	document.detailForm.action='/product/updateProduct';
 //	document.detailForm.submit();
 
-	$('input:hidden[name="prodNo"]').val();
+//	$('input:hidden[name="prodNo"]').val();
 	$('form').attr("method", "POST").attr("action", "/product/updateProduct").submit();
 }
 
