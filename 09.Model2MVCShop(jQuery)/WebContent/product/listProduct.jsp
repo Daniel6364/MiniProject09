@@ -57,18 +57,16 @@ $(function(){
 });
 
 $(function(){
-	console.log("[낮은가격순 클릭]");
-	$("input:hidden[name='lowPriceCondition']").bind("click", function(){
+	$("input[name='lowPriceCondition']").bind("click", function(){
 		fncLowPrice('${ search.currentPage }');
-		alert("[낮은가격순 클릭]");
+		alert("[낮은가격순 클릭]")
 	});
 });
 				
 $(function(){
-	console.log("[높은가격순 클릭]");
-	$("input:hidden:contains('[높은가격순 ▲]')").bind("click", function(){
+	$("input:contains('[높은가격순 ▲]')").bind("click", function(){
 		fncHighPrice('${ search.currentPage }');
-		alert("[높은가격순 클릭]");
+		alert("[높은가격순 클릭]")
 	});
 });
 
@@ -169,11 +167,11 @@ $(function(){
 		
 		<td colspan="4">
 			
-			<input type="hidden" id="lowPriceSearch" name="lowPriceCondition" value=""/>
+			<input type="hidden" id="lowPriceSearch" name="lowPriceCondition" />
 				[낮은가격순 ▼]
 			<!-- <a href = "javascript:fncLowPrice('${ search.currentPage }')">[낮은가격순 ▼]</a> -->
 	
-			<input type="hidden" id="highPriceSearch" name="highPriceCondition" value=""/>
+			<input type="hidden" id="highPriceSearch" name="highPriceCondition" />
 				[높은가격순 ▲]
 			<!-- <a href = "javascript:fncHighPrice('${ search.currentPage }')">[높은가격순 ▲]</a> -->
 		</td>
@@ -200,12 +198,12 @@ $(function(){
 			<td></td>
 			<td align="left">${ product.prodName }
 					<input type="hidden" name="prodNo" value="${ product.prodNo }"/>
-			<!-- <c:if test = "${ product.proTranCode == null }"> -->
-				<!-- <a href="/product/getProduct?prodNo=${ product.prodNo }&menu=${ menu }">${ product.prodName }</a>  --> 
-			<!-- </c:if>
-			 	<c:if test = "${ product.proTranCode != null }"> 
+			<!-- <c:if test = "${ product.proTranCode == null }"> 
+				 	<a href="/product/getProduct?prodNo=${ product.prodNo }&menu=${ menu }">${ product.prodName }</a> 
+				 </c:if>
+			 	 <c:if test = "${ product.proTranCode != null }"> 
 					${ product.prodName }
-				</c:if> --> 
+				 </c:if> --> 
 			</td>
 			<td></td>
 			<td align="left">${ product.price }</td>

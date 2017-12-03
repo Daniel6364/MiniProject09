@@ -169,7 +169,7 @@ public class ProductController {
 		product.setFileName(multipartFile.getOriginalFilename());
 			
 		}
-		
+		//////////////////////////////////////////////////////////
 		productService.addProduct(product);
 		
 		return "forward:/product/getProduct.jsp";
@@ -211,10 +211,31 @@ public class ProductController {
 
 	@RequestMapping( value="updateProduct", method=RequestMethod.POST)
 	public String updateProduct( @ModelAttribute("product") Product product, 
+			MultipartHttpServletRequest mRequest, MultipartFile multipartFile,
 //			@RequestParam("manuDate") String manuDate,
 			Model model ) throws Exception{
 
 		System.out.println("/product/updateProduct : POST");
+		
+		// SpringFramework FileUpload
+//		String temDir = "C:\\Users\\bitcamp\\git\\MiniProject07\\07.Model2MVCShop(URI,pattern)\\WebContent\\images\\uploadFiles";
+		String temDir = "C:\\Users\\iamsung33\\git\\MiniProject09\\09.Model2MVCShop(jQuery)\\WebContent\\images\\uploadFiles";
+			
+		multipartFile = mRequest.getFile("fileNames");
+
+		if (!multipartFile.isEmpty()) {
+			System.out.println("[multipartFile check in if loop]");
+			System.out.println(multipartFile.toString());
+			
+		File file = new File(temDir, multipartFile.getOriginalFilename());
+		
+		multipartFile.transferTo(file);
+		product.setFileName(multipartFile.getOriginalFilename());
+			
+		}
+		//////////////////////////////////////////////////////////
+		
+		
 		//Business Logic
 //		product.setManuDate(manuDate.replace("-", ""));
 		productService.updateProduct(product);
