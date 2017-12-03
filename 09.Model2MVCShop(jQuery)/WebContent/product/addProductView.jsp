@@ -60,8 +60,9 @@ function fncAddProduct(){
 
 $( function(){
 	$( "td.ct_btn01:contains('등록')" ).bind("click", function(){
-	
-})
+		fncAddProduct();
+	});
+});
 
 $( function(){
 	$( "td.ct_btn01:contains('취소')" ).bind("click", function(){
