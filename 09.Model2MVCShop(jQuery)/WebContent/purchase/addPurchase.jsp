@@ -4,12 +4,24 @@
 
 <html>
 <head>
+<meta charset="EUC-KR">
 <title>addPurchase.jsp</title>
+
+<!-- CDN(Content Delivery Network) 호스트 사용 -->
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+
+var tranNo = ${ purchase.tranNo };
+console.log("tranNo 확인 : " + tranNo)
+$("form").attr("method", "POST").attr("action", "/purchase/updatePurchase?tranNo=${ purchase.tranNo }")
+
+</script>
 </head>
 
 <body>
 
-<form name="updatePurchase" action="/purchase/updatePurchase?tranNo=${ purchase.tranNo }" method="post">
+<!-- <form name="updatePurchase" action="/purchase/updatePurchase?tranNo=${ purchase.tranNo }" method="post"> -->
+<form name="updatePurchase">
 
 ▶ 다음과 같이 구매가 되었습니다.
 

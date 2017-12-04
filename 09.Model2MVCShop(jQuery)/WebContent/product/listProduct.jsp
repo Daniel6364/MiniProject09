@@ -21,10 +21,12 @@ function fncGetList(currentPage) {
 //	document.getElementById("currentPage").value = currentPage;
 // 	document.detailForm.submit();
 	
-	$("#currentPage").val(currentPage)
+	$("#currentPage").val(currentPage);
 	$("form").attr("method", "POST").attr("action", "/product/listProduct?menu=${ menu }").submit();
+	console.log("fncGetList")
 }
 
+///*
 function fncLowPrice(currentPage) {
 //	document.getElementById("currentPage").value = currentPage;
 //	document.getElementById("lowPriceSearch").value = "lowPrice";
@@ -33,7 +35,7 @@ function fncLowPrice(currentPage) {
    	
 	$("#currentPage").val(currentPage)
    	$("#lowPriceSearch").val("lowPrice")
-   	$("#highPriceSearch").val(null)
+ 	$("#highPriceSearch").val(null)
 	$("form").attr("method", "POST").attr("action", "/product/listProduct?menu=${ menu }").submit();
 }
  
@@ -47,45 +49,43 @@ function fncHighPrice(currentPage) {
    	$("#lowPriceSearch").val(null)
    	$("#highPriceSearch").val("highPrice")
 	$("form").attr("method", "POST").attr("action", "/product/listProduct?menu=${ menu }").submit();
-	
 }
+//*/
 
 $(function(){
-	$( "td.ct_btn01:contains('검색')").css("color", "blue").bind("click", function(){
+	$( "td.ct_btn01:contains('검색')").bind("click", function(){
 		fncGetList('${ search.currentPage }');
 	});
 });
 
+///*
 $(function(){
-	console.log("[낮은가격순 클릭]");
-	$("input:hidden[name='lowPriceCondition']").bind("click", function(){
-		fncLowPrice('${ search.currentPage }');
-		alert("[낮은가격순 클릭]");
+	$(".lowPrice:contains('[낮은가격순 ▼]')").bind("click", function(){
+		fncLowPrice(1);
 	});
 });
 				
 $(function(){
-	console.log("[높은가격순 클릭]");
-	$("input:hidden:contains('[높은가격순 ▲]')").bind("click", function(){
-		fncHighPrice('${ search.currentPage }');
-		alert("[높은가격순 클릭]");
+	$(".highPrice:contains('[높은가격순 ▲]')").bind("click", function(){
+		fncHighPrice(1);
 	});
 });
+//*/
 
 $(function(){
 
 	$( ".ct_list_pop td:nth-child(3)" ).bind("click" , function() {
 		var prodNo = $( $('input[name="prodNo"]')[$( ".ct_list_pop td:nth-child(3)" ).index(this)] ).val();
-		<c:if test = "${ product.proTranCode == null }">
-			self.location ="/product/getProduct?prodNo=" + prodNo + "&menu=${ menu }"
-		</c:if>
-	
-		<c:if test = "${ product.proTranCode != null }">
+		
+		if (test = "${ product.proTranCode == null }") {
+			self.location ="/product/getProduct?prodNo=" + prodNo + "&menu=${ menu }";
+		} else if (test = "${ product.proTranCode != null }") {
 			alert( "해당상품은 이미 판매완료 되었습니다.");
-		</c:if>
+		}
 	});
 });
-	
+
+///*
 $(function(){
 	
 	$( ".ct_list_pop td:nth-child(9):contains('구매완료')" ).bind("click" , function() {
@@ -93,7 +93,7 @@ $(function(){
 		self.location = "/purchase/updateTranCodeByProd?prodNo=" + prodNo + "&tranCode=1"
 	});
 });
-
+//*/
  
 	</script>
 </head>
@@ -167,14 +167,16 @@ $(function(){
 	</tr>
 	<tr>
 		
-		<td colspan="4">
-			
-			<input type="hidden" id="lowPriceSearch" name="lowPriceCondition" value=""/>
-				[낮은가격순 ▼]
+		<td colspan="2" class="lowPrice">
+			<input type="hidden" id="lowPriceSearch" name="lowPriceCondition" value="">
+				[낮은가격순 ▼]</input>
 			<!-- <a href = "javascript:fncLowPrice('${ search.currentPage }')">[낮은가격순 ▼]</a> -->
-	
-			<input type="hidden" id="highPriceSearch" name="highPriceCondition" value=""/>
-				[높은가격순 ▲]
+		</td>
+		
+		<td colspan="2" class="highPrice">
+			
+			<input type="hidden" id="highPriceSearch" name="highPriceCondition" value="">
+				[높은가격순 ▲]</input>
 			<!-- <a href = "javascript:fncHighPrice('${ search.currentPage }')">[높은가격순 ▲]</a> -->
 		</td>
 	</tr>
@@ -200,12 +202,12 @@ $(function(){
 			<td></td>
 			<td align="left">${ product.prodName }
 					<input type="hidden" name="prodNo" value="${ product.prodNo }"/>
-			<!-- <c:if test = "${ product.proTranCode == null }"> -->
-				<!-- <a href="/product/getProduct?prodNo=${ product.prodNo }&menu=${ menu }">${ product.prodName }</a>  --> 
-			<!-- </c:if>
-			 	<c:if test = "${ product.proTranCode != null }"> 
+			<!-- <c:if test = "${ product.proTranCode == null }"> 
+				 	<a href="/product/getProduct?prodNo=${ product.prodNo }&menu=${ menu }">${ product.prodName }</a> 
+				 </c:if>
+			 	 <c:if test = "${ product.proTranCode != null }"> 
 					${ product.prodName }
-				</c:if> --> 
+				 </c:if> --> 
 			</td>
 			<td></td>
 			<td align="left">${ product.price }</td>

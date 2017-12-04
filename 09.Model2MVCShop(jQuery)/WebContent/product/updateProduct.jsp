@@ -82,12 +82,17 @@ $(function(){
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<img src = "/images/uploadFiles/${ product.fileName }"/>
+		<c:if test = "${ product.fileName == null }">
+			<img src="http://placehold.it/300X300" />
+		</c:if>
+		<c:if test = "${ product.fileName != null }">
+			<img src="/images/uploadFiles/${ product.fileName }" height="240"/><br/>
+		</c:if>
 		</td>
-		<td height="1" colspan="3" bgcolor="D6D6D6">${ product.fileName }</td>
 	</tr>
-	
-	
+	<tr>
+		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+	</tr>
 	<tr>
 		<td width="104" class="ct_write">
 			상품상세정보 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
