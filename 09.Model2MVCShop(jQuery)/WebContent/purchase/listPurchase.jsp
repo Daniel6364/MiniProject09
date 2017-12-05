@@ -16,32 +16,31 @@
 function fncGetList(currentPage) {
 //	document.getElementById("currentPage").value = currentPage;
 // 	document.detailForm.submit();
-	
+	$("#currentPage").val(currentPage)
 	$('form').attr("method", "POST").attr("action", "/purchase/listPurchase").submit();
 
 }
 
 
 $( function(){
-	$('.ct_list_pop td:contains("${ i }")').bind("click", function(){
+	$('.ct_list_pop td:nth-child(1)').bind("click", function(){
 		var tranNo = $( $('input[name="tranNo"]')[$('.ct_list_pop td:nth-child(1)').index(this)] ).val(); 
-		console.log(tranNo)
 		self.location = "/purchase/getPurchase?tranNo=" + tranNo
 	});
 });
 
+
 $( function(){
-	$('.ct_list_pop td:contains("${ purchase.buyer.userId }")').bind("click", function(){
+	$('.ct_list_pop td:nth-child(3)').bind("click", function(){
 		var buyerUserId = $( $('input[name="buyerUserId"]')[$('.ct_list_pop td:nth-child(3)').index(this)] ).val(); 
-		console.log(buyerUserId)
 		self.location = "/user/getUser?userId=" + buyerUserId
 	});
 });
-		
+
+
 $( function(){
 	$('.ct_list_pop td:contains("¹°°ÇµµÂø")').bind("click", function(){
 		var tranNo = $( $('input[name="tranNo"]')[$('.ct_list_pop td:nth-child(11)').index(this)] ).val(); 
-		console.log(tranNo)
 		self.location = "/purchase/updateTranCode?tranNo=" + tranNo + "&tranCode=2" 
 	});
 });		

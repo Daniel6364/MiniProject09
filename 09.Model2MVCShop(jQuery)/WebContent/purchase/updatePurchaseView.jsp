@@ -11,15 +11,44 @@
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
-<script type="text/javascript" src="../javascript/calendar.js">
+<script type="text/javascript" src="../javascript/calendar.js"></script>
 
 <!-- CDN(Content Delivery Network) 호스트 사용 -->
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 
+function fncUpdatePurchase() {
+	
+	// Validation Check
+	var name = $("input[name='receiverName']").val();
+	var addr = $("input[name='dlvyAddr']").val();
+	var phone = $("input[name='receiverPhone']").val();
+	
+	if(name == null || name.length < 1) {
+		alert("구매자 이름은 필수 입력 사항입니다.");
+	}
+	if(addr == null || name.length < 1) {
+		alert("구매자 주소는 필수 입력 사항입니다.");
+	}
+	if(phone == null || name.length < 1) {
+		alert("구매자 연락처는 필수 입력 사항입니다.");
+	}
+	
+	$("form").attr("method", "POST").attr("action", "/purchase/updatePurchase?tranNo=${ purchase.tranNo }").submit();
+	
+}
 
-//$("form").attr("method", "POST").attr("action", "")
+$(function(){
+	$(".ct_btn01:contains('수정')").bind("click", function(){
+		fncUpdatePurchase();
+	});
+});
 
+$(function(){
+	$(".ct_btn01:contains('취소')").bind("click", function(){
+		history.go(-1);
+	});
+});
 
 
 </script>
@@ -28,8 +57,8 @@
 
 <body bgcolor="#ffffff" text="#000000">
 
-<form name="updatePurchase" method="post" action="/purchase/updatePurchase?tranNo=${ purchase.tranNo }">
-<!-- <form name="updatePurchase"> -->
+<!-- <form name="updatePurchase" method="post" action="/purchase/updatePurchase?tranNo=${ purchase.tranNo }"> -->
+<form name="updatePurchase">
 
 <table width="100%" height="37" border="0" cellpadding="0" cellspacing="0">
 	<tr>
@@ -77,7 +106,7 @@
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
 	<tr>
-		<td width="104" class="ct_write">구매자이름</td>
+		<td width="104" class="ct_write">구매자 이름</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
 			<input 	type="text" name="receiverName" class="ct_input_g" style="width: 100px; height: 19px" 
@@ -100,7 +129,7 @@
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
 	<tr>
-		<td width="104" class="ct_write">구매자주소</td>
+		<td width="104" class="ct_write">구매자 주소</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
 			<input 	type="text" name="dlvyAddr" class="ct_input_g" style="width: 100px; height: 19px" 
@@ -146,7 +175,8 @@
 					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 				</td>
 				<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-					<input type="submit" value="수정"/>
+					수정
+				<!-- <input type="submit" value="수정"/> -->
 				</td>
 				<td width="14" height="23">
 					<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
@@ -156,7 +186,8 @@
 					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 				</td>
 				<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-					<a href="javascript:history.go(-1)">취소</a>
+					취소
+				<!-- <a href="javascript:history.go(-1)">취소</a> -->
 				</td>
 				<td width="14" height="23">
 					<img src="/images/ct_btnbg03.gif" width="14" height="23"/>

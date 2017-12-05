@@ -1,18 +1,35 @@
 <%@ page contentType="text/html; charset=euc-kr" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%--@ page import="com.model2.mvc.service.domain.Purchase"--%>
-
-<%--
-	Purchase purchase = (Purchase)request.getAttribute("purchase");
---%>
-
 <html>
 <head>
+<meta charset="EUC-KR">
+
 <title>updatePurchase.jsp</title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
+<!-- CDN(Content Delivery Network) 호스트 사용 -->
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+
+$(function(){
+	
+	$(".ct_btn01:contains('다시수정')").bind("click", function(){
+		var tranNo = $("td input[name='tranNo']").val();
+		self.location = "/purchase/updatePurchase?tranNo=" + tranNo
+	});
+});
+
+$(function(){
+	
+	$(".ct_btn01:contains('확인')").bind("click", function(){
+		self.location = "/purchase/listPurchase"
+	});
+});
+
+
+</script>
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
@@ -129,7 +146,9 @@
 	</tr>
 
 	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+		<td height="1" colspan="3" bgcolor="D6D6D6">
+			<input type="hidden" name="tranNo" value="${ purchase.tranNo }"/>
+		</td>
 	</tr>
 	
 </table>
@@ -143,8 +162,9 @@
 					<td width="17" height="23">
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
-					<td background="/images/ct_btnbg02.gif" class="ct_btn01"	style="padding-top: 3px;">
-						<a href="/purchase/updatePurchase?tranNo=${ purchase.tranNo }">수정</a>
+					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
+						다시수정
+						<!-- <a href="/purchase/updatePurchase?tranNo=${ purchase.tranNo }">다시수정</a> -->
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
@@ -153,8 +173,9 @@
 					<td width="17" height="23">
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
-					<td background="/images/ct_btnbg02.gif" class="ct_btn01"	style="padding-top: 3px;">
-						<a href="javascript:history.go(-1);">확인</a>
+					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
+						확인
+					<!-- <a href="javascript:history.go(-1);">확인</a> -->
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif"width="14" height="23"/>
