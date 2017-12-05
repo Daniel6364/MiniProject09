@@ -3,18 +3,51 @@
 
 <html>
 <head>
+<meta charset="EUC-KR">
 <title>listPurchase.jsp</title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
+<!-- CDN(Content Delivery Network) 호스트 사용 -->
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 
 //검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용  
 function fncGetList(currentPage) {
-	document.getElementById("currentPage").value = currentPage;
-   	document.detailForm.submit();		
+//	document.getElementById("currentPage").value = currentPage;
+// 	document.detailForm.submit();
+	
+	$('form').attr("method", "POST").attr("action", "/purchase/listPurchase").submit();
+
 }
 
+
+$( function(){
+	$('.ct_list_pop td:contains("${ i }")').bind("click", function(){
+		var tranNo = $( $('input[name="tranNo"]')[$('.ct_list_pop td:nth-child(1)').index(this)] ).val(); 
+		console.log(tranNo)
+		self.location = "/purchase/getPurchase?tranNo=" + tranNo
+	});
+});
+
+$( function(){
+	$('.ct_list_pop td:contains("${ purchase.buyer.userId }")').bind("click", function(){
+		var buyerUserId = $( $('input[name="buyerUserId"]')[$('.ct_list_pop td:nth-child(3)').index(this)] ).val(); 
+		console.log(buyerUserId)
+		self.location = "/user/getUser?userId=" + buyerUserId
+	});
+});
+		
+$( function(){
+	$('.ct_list_pop td:contains("물건도착")').bind("click", function(){
+		var tranNo = $( $('input[name="tranNo"]')[$('.ct_list_pop td:nth-child(11)').index(this)] ).val(); 
+		console.log(tranNo)
+		self.location = "/purchase/updateTranCode?tranNo=" + tranNo + "&tranCode=2" 
+	});
+});		
+		
+		
+		
 </script>
 </head>
 
@@ -22,7 +55,8 @@ function fncGetList(currentPage) {
 
 <div style="width: 98%; margin-left: 10px;">
 
-<form name="detailForm" action="/purchase/listPurchase" method="post">
+<!-- <form name="detailForm" action="/purchase/listPurchase" method="post"> -->
+<form name="detailForm">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -65,11 +99,13 @@ function fncGetList(currentPage) {
 		<c:set var="i" value="${ i + 1 }" />
 	<tr class="ct_list_pop">
 		<td align="center">
-			<a href="/purchase/getPurchase?tranNo=${ purchase.tranNo }">${ i }</a>
+			<input type="hidden" name="tranNo" value="${ purchase.tranNo }">${ i }</input>
+		<!-- <a href="/purchase/getPurchase?tranNo=${ purchase.tranNo }">${ i }</a> -->
 		</td>
 		<td></td>
 		<td align="left">
-			<a href="/user/getUser?userId=${ purchase.buyer.userId }">${ purchase.buyer.userId }</a>
+			<input type="hidden" name="buyerUserId" value="${ purchase.buyer.userId }">${ purchase.buyer.userId }</input>
+		<!-- <a href="/user/getUser?userId=${ purchase.buyer.userId }">${ purchase.buyer.userId }</a> -->
 		</td>
 		<td></td>
 		<td align="left">${ purchase.receiverName }</td>
@@ -90,7 +126,8 @@ function fncGetList(currentPage) {
 		<td></td>
 		<td align="left">
 			<c:if test="${ purchase.tranCode == '1' }">
-				<a href="/purchase/updateTranCode?tranNo=${ purchase.tranNo }&tranCode=2">물건도착</a>
+				<input type="hidden" name="tranNo" value="${ purchase.tranNo }">물건도착</input>
+			<!-- <a href="/purchase/updateTranCode?tranNo=${ purchase.tranNo }&tranCode=2">물건도착</a> -->
 			</c:if>
 		</td>
 	</tr>

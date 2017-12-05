@@ -1,13 +1,27 @@
 <%@ page contentType="text/html; charset=euc-kr" %>
+<%@ page pageEncoding="EUC-KR"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
 <head>
-<link rel="stylesheet" href="/css/admin.css" type="text/css">
+<meta charset="EUC-KR">
 
 <title>updatePurchaseView.jsp</title>
 
+<link rel="stylesheet" href="/css/admin.css" type="text/css">
+
 <script type="text/javascript" src="../javascript/calendar.js">
+
+<!-- CDN(Content Delivery Network) 호스트 사용 -->
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+
+
+//$("form").attr("method", "POST").attr("action", "")
+
+
+
 </script>
 
 </head>
@@ -15,6 +29,7 @@
 <body bgcolor="#ffffff" text="#000000">
 
 <form name="updatePurchase" method="post" action="/purchase/updatePurchase?tranNo=${ purchase.tranNo }">
+<!-- <form name="updatePurchase"> -->
 
 <table width="100%" height="37" border="0" cellpadding="0" cellspacing="0">
 	<tr>
